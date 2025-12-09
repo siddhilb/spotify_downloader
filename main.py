@@ -65,7 +65,7 @@ def download_music():
     Path(download_dir).mkdir(exist_ok=True)
     try:
         result = subprocess.run(
-            ['spotdl', user_input, '--output', download_dir], 
+            ['spotdl', user_input, '--output', download_dir,'--audio-quality', '192k'], 
             capture_output=True, # Capture stdout and stderr
             text=True,
             check=True # Raise an exception if the command fails
@@ -79,9 +79,10 @@ def download_music():
     search_pattern = os.path.join(download_dir, '*mp3')
     files = glob.glob(search_pattern)
     st.space(8)
-    st.success('Downloading complete!')
     if not files:
         raise RuntimeError('No audio found after running SpotDL.')
+    else:
+        st.success('Downloading complete!')
     return files
     #latest_file = max(list_of_files, key=os.path.getctime)
     #file_path = latest_file
@@ -91,6 +92,7 @@ if user_input:
         list_of_files=download_music()
     except RuntimeError as error:
         st.error(str(error))
+        st.expander("Show SpotDL Debug Log").code(str(error))
         # if 'enter' in st.session_state:
         #     st.session_state['enter']=''
         
