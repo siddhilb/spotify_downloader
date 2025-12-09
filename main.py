@@ -55,12 +55,12 @@ list_of_files=[]
 
 downloaded=False
 
+st.cache_data.clear()
 
 @st.cache_data(show_spinner="Downloading song(s)...")
 
     
 def download_music():
-    st.cache_data.clear()
     delete_contents()
     Path(download_dir).mkdir(exist_ok=True)
     try:
