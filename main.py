@@ -27,26 +27,24 @@ def delete_contents():
     except OSError as error:
         st.warning(f'Could not delete directory {download_dir}: {error}')
         
-def run_on_first_load():
-    st.cache_data.clear()
-    delete_contents()
+# def run_on_first_load():
+#     st.cache_data.clear()
+#     delete_contents()
 
-
-# 2. Check the session state for a flag
-if 'first_run_complete' not in st.session_state:
-    run_on_first_load()
-    st.session_state['first_run_complete'] = True
+# if 'first_run_complete' not in st.session_state:
+#     run_on_first_load()
+#     st.session_state['first_run_complete'] = True
         
-# def cleanup_files():
-#     now = time.time()
-#     for path_file_path in Path(download_dir).glob('*'):
-#         if os.stat(path_file_path).st_mtime < now - max_time:
-#             try:
-#                 os.remove(path_file_path)
-#             except OSError as error:
-#                 print(f"Error deleting old file {path_file_path}: {error}")
+# # def cleanup_files():
+# #     now = time.time()
+# #     for path_file_path in Path(download_dir).glob('*'):
+# #         if os.stat(path_file_path).st_mtime < now - max_time:
+# #             try:
+# #                 os.remove(path_file_path)
+# #             except OSError as error:
+# #                 print(f"Error deleting old file {path_file_path}: {error}")
 
-# cleanup_files()
+# # cleanup_files()
 
 downloaded=False
 
@@ -62,6 +60,8 @@ downloaded=False
 
     
 def download_music():
+    st.cache_data.clear()
+    delete_contents()
     Path(download_dir).mkdir(exist_ok=True)
     try:
         result = subprocess.run(
