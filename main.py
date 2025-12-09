@@ -3,7 +3,7 @@ import os
 import glob
 from pathlib import Path
 import zipfile
-import time
+import sys
 from io import BytesIO
 import shutil
 import subprocess
@@ -61,12 +61,11 @@ st.cache_data.clear()
 
     
 def download_music():
-    time.sleep(1)
     delete_contents()
     Path(download_dir).mkdir(exist_ok=True)
     try:
         result = subprocess.run(
-            ['spotdl', user_input, '--output', download_dir,'--bitrate', '128k'], 
+            ['spotdl', user_input, '--output', download_dir,'--bitrate', '192k'], 
             capture_output=True, # Capture stdout and stderr
             text=True,
             check=True # Raise an exception if the command fails
@@ -78,10 +77,18 @@ def download_music():
     # st.info('Downloading song(s)..')
     # os.system(f'spotdl {user_input} --output {download_dir}')
     search_pattern = os.path.join(download_dir, '*mp3')
-    files = glob.glob(search_pattern,recursive=True)
+    files = [
+    str(p.resolve()) # Use .resolve() to get the absolute path
+    for p in Path(download_dir).rglob('*.mp3')
+    if p.is_file()
+]
     st.space(8)
     if not files:
-        raise RuntimeError('No audio found after running SpotDL.')
+        files = [
+                str(p.resolve())
+                for p in Path(download_dir).rglob('*.MP3')
+                if p.is_file()
+            ]    
     else:
         st.success('Downloading complete!')
     return files
