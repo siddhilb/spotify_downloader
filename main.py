@@ -6,6 +6,7 @@ import zipfile
 import sys
 from io import BytesIO
 import shutil
+import subprocess
 user_input = st.text_input('Copy & paste a spotify link into here to download and play it.',key='enter')
 user_input = user_input.split('?',1)[0]
 web_page_open = True
@@ -13,6 +14,7 @@ web_page_open = True
 
 download_dir = 'temp_downloads'
 Path(download_dir).mkdir(exist_ok=True)
+
 
 
 max_time = 3*60
@@ -61,15 +63,26 @@ downloaded=False
     
 def download_music():
     Path(download_dir).mkdir(exist_ok=True)
+    try:
+        result = subprocess.run(
+            ['spotdl', user_input, '--output', download_dir], 
+            capture_output=True, # Capture stdout and stderr
+            text=True,
+            check=True # Raise an exception if the command fails
+        )
+        # result.stdout and result.stderr will contain spotdl's messages
+    except subprocess.CalledProcessError as e:
+        # Raise a clearer exception with the error output
+        raise RuntimeError(f"SpotDL failed. Error: {e.stderr} Output: {e.stdout}")
     # st.info('Downloading song(s)..')
-    os.system(f'spotdl {user_input} --output {download_dir}')
+    # os.system(f'spotdl {user_input} --output {download_dir}')
     search_pattern = os.path.join(download_dir, '*mp3')
     files = glob.glob(search_pattern)
     st.space(8)
     st.success('Downloading complete!')
-    if not files:
-        raise RuntimeError('No audio found after running SpotDL.')
-    return files
+    # if not files:
+    #     raise RuntimeError('No audio found after running SpotDL.')
+    # return files
     # latest_file = max(list_of_files, key=os.path.getctime)
     # file_path = latest_file
     # return list_of_files
