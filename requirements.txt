@@ -70,3 +70,4 @@ websockets==14.2
 wrapt==2.0.1
 yt-dlp==2025.11.12
 ytmusicapi==1.11.3
+ffmpeg-python

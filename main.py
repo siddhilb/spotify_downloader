@@ -14,7 +14,6 @@ web_page_open = True
 download_dir = 'temp_downloads'
 Path(download_dir).mkdir(exist_ok=True)
 
-os.system('spotdl --download-ffmpeg')
 
 max_time = 3*60
 
