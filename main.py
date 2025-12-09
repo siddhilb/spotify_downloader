@@ -78,8 +78,8 @@ if user_input:
         list_of_files=download_music()
     except RuntimeError as error:
         st.error(str(error))
-        if 'enter' in st.session_state:
-            st.session_state['enter']=''
+        # if 'enter' in st.session_state:
+        #     st.session_state['enter']=''
         
 if list_of_files:
     if not list_of_files:
