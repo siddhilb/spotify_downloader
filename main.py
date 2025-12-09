@@ -3,7 +3,7 @@ import os
 import glob
 from pathlib import Path
 import zipfile
-import sys
+import time
 from io import BytesIO
 import shutil
 import subprocess
@@ -61,11 +61,12 @@ st.cache_data.clear()
 
     
 def download_music():
+    time.sleep(1)
     delete_contents()
     Path(download_dir).mkdir(exist_ok=True)
     try:
         result = subprocess.run(
-            ['spotdl', user_input, '--output', download_dir,'--bitrate', '192k'], 
+            ['spotdl', user_input, '--output', download_dir,'--bitrate', '128k'], 
             capture_output=True, # Capture stdout and stderr
             text=True,
             check=True # Raise an exception if the command fails
