@@ -61,7 +61,7 @@ st.cache_data.clear()
 
     
 def download_music():
-    delete_contents()
+    # delete_contents()
     Path(download_dir).mkdir(exist_ok=True)
     try:
         result = subprocess.run(
