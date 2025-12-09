@@ -77,7 +77,7 @@ def download_music():
     # st.info('Downloading song(s)..')
     # os.system(f'spotdl {user_input} --output {download_dir}')
     search_pattern = os.path.join(download_dir, '*mp3')
-    files = glob.glob(search_pattern)
+    files = glob.glob(search_pattern,recursive=True)
     st.space(8)
     if not files:
         raise RuntimeError('No audio found after running SpotDL.')
