@@ -65,7 +65,7 @@ def download_music():
     Path(download_dir).mkdir(exist_ok=True)
     try:
         result = subprocess.run(
-            ['spotdl', user_input, '--output', download_dir,'--audio-quality', '192k'], 
+            ['spotdl', user_input, '--output', download_dir,'--bitrate', '192k'], 
             capture_output=True, # Capture stdout and stderr
             text=True,
             check=True # Raise an exception if the command fails
