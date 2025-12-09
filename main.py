@@ -88,7 +88,9 @@ def download_music():
                 str(p.resolve())
                 for p in Path(download_dir).rglob('*.MP3')
                 if p.is_file()
-            ]    
+            ]  
+    if not files:
+        raise RuntimeError('No audio found after running SpotDL.')
     else:
         st.success('Downloading complete!')
     return files
