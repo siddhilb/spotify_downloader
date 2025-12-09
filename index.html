@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1,height=device-height">
+
+  </head>
+  <body>
+    <div class="search-container">
+    <form onsubmit="search(event)"class="search">
+      <input id="search_output"type="text" placeholder="Search for songs in your library..">
+      <button onclick="search(event)"><img src="search2.png"></button></div></form></body></div>
+    <div class="main_things-container">
+    <div class="black"></div>
+    <audio id="myaudio" type="audio/mp3"></audio>
+    <div class="container">
+    <!-- <p1 id="list" class="list">Currently playing: Song 1 of 2 </p1> -->
+
+      <div class="play-wrapper">
+        <button id="back" class="back_b"
+            onclick="back()"><img class="back" src="next.png"></button>
+        <button id="play" onclick="play()" class="play">
+          <img class="img" id="playimg" src="play2.png"></button>
+        
+        <div class="button-wrapper">
+          <button id="next"
+            onclick="next()"><img class="next" src="next.png"></button>
+        </div>
+        </div>
+        
+      </div>
+
+      <div class="p-container">
+      <!-- <img src="cover.png"class="image"> -->
+
+        <div class="progress-wrapper">
+          <progress id="progress-bar" value="0" max="1"
+            class="progress"></progress>
+        </div>
+
+      </div>
+    </div>
+    <!-- <script src="script.js"></script> -->
+    <script type="module" src="script.js"></script>
+    <script src="bundle.js"></script>
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    </div>
+  </body>
+</html>
