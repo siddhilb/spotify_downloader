@@ -82,10 +82,10 @@ def download_music():
     st.success('Downloading complete!')
     # if not files:
     #     raise RuntimeError('No audio found after running SpotDL.')
-    # return files
-    # latest_file = max(list_of_files, key=os.path.getctime)
-    # file_path = latest_file
-    # return list_of_files
+    #return files
+    #latest_file = max(list_of_files, key=os.path.getctime)
+    #file_path = latest_file
+    return list_of_files
 if user_input:
     try:
         list_of_files=download_music()
