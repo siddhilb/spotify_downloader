@@ -64,19 +64,19 @@ st.cache_data.clear()
 def download_music():
     delete_contents()
     Path(download_dir).mkdir(exist_ok=True)
-    # try:
-    #     result = subprocess.run(
-    #         ['spotdl', user_input, '--output', download_dir,'--bitrate', '192k'], 
-    #         capture_output=True, # Capture stdout and stderr
-    #         text=True,
-    #         check=True # Raise an exception if the command fails
-    #     )
-    #     # result.stdout and result.stderr will contain spotdl's messages
-    # except subprocess.CalledProcessError as e:
-    #     # Raise a clearer exception with the error output
-    #     raise RuntimeError(f"SpotDL failed. Error: {e.stderr} Output: {e.stdout}")
-    # st.info('Downloading song(s)..')
-    os.system(f'spotdl {st.session_state["enter"]} --output temp_downloads --bitrate 128k')
+    try:
+        result = subprocess.run(
+            ['spotdl', user_input, '--output', download_dir,'--bitrate', '192k'], 
+            capture_output=True, # Capture stdout and stderr
+            text=True,
+            check=True # Raise an exception if the command fails
+        )
+        # result.stdout and result.stderr will contain spotdl's messages
+    except subprocess.CalledProcessError as e:
+        # Raise a clearer exception with the error output
+        raise RuntimeError(f"SpotDL failed. Error: {e.stderr} Output: {e.stdout}")
+    st.info('Downloading song(s)..')
+    # os.system(f'spotdl {st.session_state["enter"]} --output temp_downloads --bitrate 128k')
     download_path = Path('temp_downloads')    
     files = [
     str(p.resolve()) 
@@ -85,12 +85,12 @@ def download_music():
 ]
     st.space(8)
     if not files:
-        return []
-        # files = [
-        #         str(p.resolve())
-        #         for p in Path(download_dir).rglob('*.MP3')
-        #         if p.is_file()
-        #     ]  
+        # return []
+        files = [
+                str(p.resolve())
+                for p in Path(download_dir).rglob('*.MP3')
+                if p.is_file()
+        ]
     if not files:
         raise RuntimeError('No audio found after running SpotDL.')
     else:
@@ -158,6 +158,8 @@ if list_of_files:
 
                 try:
                     with open(file_path,'rb') as f:
+                        file_pathh = Path(file_path).resolve()
+                        file_name = file_pathh.name
                         audio_bytes = f.read()
                 except FileNotFoundError:
                     st.error('Audio file not found.')
