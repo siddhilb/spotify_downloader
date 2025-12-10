@@ -76,7 +76,7 @@ def download_music():
     #     # Raise a clearer exception with the error output
     #     raise RuntimeError(f"SpotDL failed. Error: {e.stderr} Output: {e.stdout}")
     # st.info('Downloading song(s)..')
-    os.system(f'spotdl {st.session_state["enter"]} --output temp_downloads --bitrate 128k')
+    os.system(f'spotdl {user_input} --output temp_downloads --bitrate 128k')
     download_path = Path('temp_downloads')    
     files = [
     str(p.resolve()) 
@@ -84,17 +84,17 @@ def download_music():
     if p.is_file()
 ]
     st.space(8)
-    if not files:
-        return []
-        # files = [
-        #         str(p.resolve())
-        #         for p in Path(download_dir).rglob('*.MP3')
-        #         if p.is_file()
-        #     ]  
+    # if not files:
+    #     # return []
+    #     # files = [
+    #     #         str(p.resolve())
+    #     #         for p in Path(download_dir).rglob('*.MP3')
+    #     #         if p.is_file()
+    #     #     ]  
     if not files:
         raise RuntimeError('No audio found after running SpotDL.')
-    else:
-        st.success('Downloading complete!')
+    # else:
+    #     st.success('Downloading complete!')
     return files
     #latest_file = max(list_of_files, key=os.path.getctime)
     #file_path = latest_file
@@ -121,10 +121,10 @@ if 'spotdl_debug_log' in st.session_state and st.session_state['spotdl_debug_log
     with st.expander("SpotDL Detailed Log (CLICK HERE TO DEBUG)", expanded=True):
         # Display the log content
         st.code(st.session_state['spotdl_debug_log'], language='log')
-if user_input:
-    # if not list_of_files:
-    #         st.error('No audio files found. Check the console for specific errors.')
-    # else:
+if list_of_files:
+    if not list_of_files:
+            st.error('No audio files found. Check the console for specific errors.')
+    else:
         zip_buffer = BytesIO()
         with zipfile.ZipFile(zip_buffer,'w',zipfile.ZIP_DEFLATED, False) as zip_file:
             for file_path in list_of_files:
