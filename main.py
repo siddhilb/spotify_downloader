@@ -102,9 +102,9 @@ def download_music():
 if user_input:
     try:
         # Capture both the list of files and the log
-        list_of_files, spotdl_log = download_music()
+        list_of_files = download_music()
         
-        st.session_state['spotdl_debug_log'] = spotdl_log # Save log to session state
+        # st.session_state['spotdl_debug_log'] = spotdl_log # Save log to session state
         
         st.space(8)
         st.success('Downloading complete! Files ready below.')
