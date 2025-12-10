@@ -71,6 +71,7 @@ def download_music():
             check=True # Raise an exception if the command fails
         )
         # result.stdout and result.stderr will contain spotdl's messages
+        spotdl_log += f"STDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}\nExit Code: {result.returncode}"
     except subprocess.CalledProcessError as e:
         # Raise a clearer exception with the error output
         raise RuntimeError(f"SpotDL failed. Error: {e.stderr} Output: {e.stdout}")
