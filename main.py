@@ -64,14 +64,14 @@ def download_music():
     delete_contents()
     Path(download_dir).mkdir(exist_ok=True)
     try:
-         subprocess.run(
+        result = subprocess.run(
             ['spotdl', user_input, '--output', download_dir,'--bitrate', '192k'], 
             capture_output=True, # Capture stdout and stderr
             text=True,
             check=True # Raise an exception if the command fails
         )
         # result.stdout and result.stderr will contain spotdl's messages
-        # spotdl_log += f"STDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}\nExit Code: {result.returncode}"
+        spotdl_log += f"STDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}\nExit Code: {result.returncode}"
     except subprocess.CalledProcessError as e:
         # Raise a clearer exception with the error output
         raise RuntimeError(f"SpotDL failed. Error: {e.stderr} Output: {e.stdout}")
@@ -100,7 +100,8 @@ def download_music():
     # return list_of_files
 if user_input:
     try:
-        list_of_files=download_music()
+        list_of_files,spotdl_log=download_music()
+        st.session_state['spotdl_debug_log'] = spotdl_log
     except RuntimeError as error:
         st.error(str(error))
         st.expander("Show SpotDL Debug Log").code(str(error))
