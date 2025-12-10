@@ -121,7 +121,7 @@ if 'spotdl_debug_log' in st.session_state and st.session_state['spotdl_debug_log
     with st.expander("SpotDL Detailed Log (CLICK HERE TO DEBUG)", expanded=True):
         # Display the log content
         st.code(st.session_state['spotdl_debug_log'], language='log')
-if list_of_files:
+if user_input:
     if not list_of_files:
             st.error('No audio files found. Check the console for specific errors.')
     else:
