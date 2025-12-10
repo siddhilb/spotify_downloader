@@ -122,9 +122,9 @@ if 'spotdl_debug_log' in st.session_state and st.session_state['spotdl_debug_log
         # Display the log content
         st.code(st.session_state['spotdl_debug_log'], language='log')
 if user_input:
-    if not list_of_files:
-            st.error('No audio files found. Check the console for specific errors.')
-    else:
+    # if not list_of_files:
+    #         st.error('No audio files found. Check the console for specific errors.')
+    # else:
         zip_buffer = BytesIO()
         with zipfile.ZipFile(zip_buffer,'w',zipfile.ZIP_DEFLATED, False) as zip_file:
             for file_path in list_of_files:
