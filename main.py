@@ -55,7 +55,7 @@ list_of_files=[]
 
 downloaded=False
 
-st.cache_data.clear()
+# st.cache_data.clear()
 
 @st.cache_data(show_spinner="Downloading song(s)...")
 
