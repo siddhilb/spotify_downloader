@@ -49,6 +49,7 @@ def delete_contents():
 downloaded=False
 
 list_of_files=[]
+st.cache_data.clear()
 
 
 # if user_input:
@@ -89,11 +90,11 @@ def download_music():
         #         str(p.resolve())
         #         for p in Path(download_dir).rglob('*.MP3')
         #         if p.is_file()
-    #     #     ]  
-    # if not files:
-    #     raise RuntimeError('No audio found after running SpotDL.')
-    # else:
-    #     st.success('Downloading complete!')
+        #     ]  
+    if not files:
+        raise RuntimeError('No audio found after running SpotDL.')
+    else:
+        st.success('Downloading complete!')
     return files
     #latest_file = max(list_of_files, key=os.path.getctime)
     #file_path = latest_file
