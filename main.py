@@ -61,7 +61,7 @@ st.cache_data.clear()
 
     
 def download_music():
-    # delete_contents()
+    delete_contents()
     Path(download_dir).mkdir(exist_ok=True)
     try:
         result = subprocess.run(
@@ -78,7 +78,7 @@ def download_music():
     # os.system(f'spotdl {user_input} --output {download_dir}')
     search_pattern = os.path.join(download_dir, '*mp3')
     files = [
-    str(p.resolve()) # Use .resolve() to get the absolute path
+    str(p.resolve()) 
     for p in Path(download_dir).rglob('*.mp3')
     if p.is_file()
 ]
@@ -99,13 +99,26 @@ def download_music():
     # return list_of_files
 if user_input:
     try:
-        list_of_files=download_music()
-    except RuntimeError as error:
-        st.error(str(error))
-        st.expander("Show SpotDL Debug Log").code(str(error))
-        # if 'enter' in st.session_state:
-        #     st.session_state['enter']=''
+        # Capture both the list of files and the log
+        list_of_files, spotdl_log = download_music()
         
+        st.session_state['spotdl_debug_log'] = spotdl_log # Save log to session state
+        
+        st.space(8)
+        st.success('Downloading complete! Files ready below.')
+        
+    except RuntimeError as error:
+        # Catch the error from the function
+        error_message = str(error)
+        st.error(f"Download Error: {error_message.split('SpotDL log:')[0].strip()}")
+        st.session_state['spotdl_debug_log'] = error_message # Save the full error log
+        list_of_files = [] # Ensure files list is empty
+
+# --- Display the Log for Debugging ---
+if 'spotdl_debug_log' in st.session_state and st.session_state['spotdl_debug_log']:
+    with st.expander("SpotDL Detailed Log (CLICK HERE TO DEBUG)", expanded=True):
+        # Display the log content
+        st.code(st.session_state['spotdl_debug_log'], language='log')
 if list_of_files:
     if not list_of_files:
             st.error('No audio files found. Check the console for specific errors.')
